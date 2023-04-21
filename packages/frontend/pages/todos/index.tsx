@@ -1,12 +1,13 @@
-import TodoWebContainer from '../../components/TodoWebContainer';
+import Todos from '../../components/Todos';
+import { TodoWebContainer, Logo, TodoWebHeader } from '../../components/shared';
 
-const Todos = () => {
-  return <div className="page">Todos</div>;
-};
+const PAGE_TITLE = 'Todo List';
 
 export function Index() {
   return (
     <TodoWebContainer>
+      <Logo />
+      <TodoWebHeader title={PAGE_TITLE} />
       <Todos />
     </TodoWebContainer>
   );

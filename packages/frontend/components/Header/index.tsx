@@ -1,5 +1,3 @@
-import { selectAuthState } from '../../store/auth';
-import { useSelector } from 'react-redux';
 import styled from '@emotion/styled';
 
 import { Logout } from './Logout';
@@ -20,7 +18,8 @@ const HeaderContainer = styled.header`
 `;
 
 const Header = () => {
-  const authState = useSelector(selectAuthState);
+  // TODO: Create session Context
+  const authState = true;
 
   return <HeaderContainer>{authState ? <Logout /> : false}</HeaderContainer>;
 };

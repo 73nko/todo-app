@@ -1,10 +1,12 @@
 import Head from 'next/head';
 import { AppProps } from 'next/app';
-import { Provider } from 'react-redux';
+import { ApolloProvider } from '@apollo/client';
 
-import { wrapper } from '../store/store';
+import { PageWrapper } from '../components/shared';
 import Header from '../components/Header';
-import styled from '@emotion/styled';
+import { useApollo } from '../graphql/apolloClient';
+
+import './styles.css';
 
 const PageHead = () => (
   <Head>
@@ -12,70 +14,21 @@ const PageHead = () => (
   </Head>
 );
 
-const PageWrapper = styled.main`
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
-  }
-  * {
-    margin: 0;
-    padding: 0;
-  }
-  html,
-  body {
-    height: 100%;
-  }
-  body {
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-  }
-  img,
-  picture,
-  video,
-  canvas,
-  svg {
-    display: block;
-    max-width: 100%;
-  }
-  input,
-  button,
-  textarea,
-  select {
-    font: inherit;
-  }
-  p,
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    overflow-wrap: break-word;
-  }
-  #root,
-  #__next {
-    isolation: isolate;
-  }
-
-  width: 100vw;
-  height: 100vh;
-  background-color: var(--pale-grey);
-`;
-
-function TodoApp({ Component, ...rest }: AppProps) {
-  const { store, props } = wrapper.useWrappedStore(rest);
+function TodoApp({ Component, pageProps }: AppProps) {
+  const client = useApollo(pageProps);
   return (
     <>
       <PageHead />
-      <Provider store={store}>
+      <ApolloProvider client={client}>
         <PageWrapper>
           <Header />
-          <Component {...props} />
+          <div className="container">
+            <Component {...pageProps} />
+          </div>
         </PageWrapper>
-      </Provider>
+      </ApolloProvider>
     </>
   );
 }
 
-export default wrapper.withRedux(TodoApp);
+export default TodoApp;

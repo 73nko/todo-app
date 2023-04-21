@@ -1,21 +1,16 @@
-import { Context, verify, createToken } from '@todo-app/utils';
+import {
+  Context,
+  verify,
+  createToken,
+  CreateAccountInput,
+  LoginInput,
+} from '@todo-app/utils';
 import { Prisma, User } from '@prisma/client';
 import {
   checkUserAlreadyExists,
   checkUserEmailExists,
   createUser,
 } from './user-utils';
-
-type CreateAccountInput = {
-  username: string;
-  password: string;
-  email: string;
-};
-
-type LoginInput = {
-  email: string;
-  password: string;
-};
 
 type UserResponse = Prisma.PrismaPromise<User>;
 type SignResponse = Promise<{ jwt: string }>;
@@ -26,7 +21,6 @@ export const getUser = (
   context: Context
 ): UserResponse => {
   if (context.currentUser === null) throw new Error('Unauthenticated!');
-
   return context.prisma.user.findUniqueOrThrow({
     where: {
       id: context.currentUser.id,

@@ -89,6 +89,7 @@ export const typeDefs = `
 
   type Mutation {
     login(input: LoginInput!): LoginResponse!
+    logout: Boolean!
     createAccount(input: CreateAccountInput!): CreateAccountResponse!
     createTask(input: CreateTaskInput!): CreateTaskResponse!
     updateTask(input: UpdateTaskInput!): UpdateTaskResponse!
@@ -97,3 +98,14 @@ export const typeDefs = `
     deleteTask(input: DeleteTaskInput!): DeleteTaskResponse!
   }
 `;
+
+export type CreateAccountInput = {
+  username: string;
+  password: string;
+  email: string;
+};
+
+export type LoginInput = {
+  email: string;
+  password: string;
+};

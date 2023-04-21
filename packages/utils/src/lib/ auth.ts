@@ -9,6 +9,8 @@ export async function authenticateUser(
   const header = request.headers.get('authorization');
   if (header !== null) {
     const token = header.split(' ')[1];
+    if (!token) return null;
+
     const tokenPayload = verify(token, jwtConfig.jwt.secret) as JwtPayload;
     const userId = tokenPayload['id'];
 

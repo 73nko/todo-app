@@ -1,17 +1,22 @@
 import { useRouter } from 'next/router';
-import { useDispatch } from 'react-redux';
-
-import { logout } from '../../store/auth';
+import { TOKEN } from '../../graphql/apolloClient';
+import { useCallback } from 'react';
 
 export const Logout = () => {
   const router = useRouter();
-  const dispatch = useDispatch();
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    dispatch(logout());
-    router.push('/');
-  };
+  const handleLogout = useCallback(
+    async (event: React.FormEvent) => {
+      event.preventDefault();
+      try {
+        localStorage.removeItem(TOKEN);
+        router.push('/');
+      } catch {
+        console.log('error');
+      }
+    },
+    [router]
+  );
 
   return <button onClick={handleLogout}>Logout</button>;
 };

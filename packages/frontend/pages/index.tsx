@@ -1,26 +1,29 @@
-import { logout } from '../store/auth';
-
-import TodoWebContainer from '../components/TodoWebContainer';
+import { Logo, TodoWebContainer, TodoWebHeader } from '../components/shared';
 import Login from '../components/Login';
-import { wrapper } from '../store/store';
 
-export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
-    async ({ params }) => {
-      // Todo: check if user is logged in
-      await store.dispatch(logout());
-      console.log('State on server', store.getState());
-      return {
-        props: {
-          authState: false,
-        },
-      };
-    }
-);
+import { USER_GET } from '../graphql/User';
+import { useRouter } from 'next/router';
+import { useQuery } from '@apollo/client';
 
-export function Index() {
+const PAGE_TITLE = 'Welcome back!';
+const PAGE_SUBTITLE = 'Login to continue';
+
+export function Index({ user }: { user: any }) {
+  const router = useRouter();
+  const { loading, data, error } = useQuery(USER_GET.gql);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (data?.user) {
+    router.push('/todos');
+  }
+
   return (
     <TodoWebContainer>
+      <Logo />
+      <TodoWebHeader title={PAGE_TITLE} subtitle={PAGE_SUBTITLE} />
       <Login />
     </TodoWebContainer>
   );
