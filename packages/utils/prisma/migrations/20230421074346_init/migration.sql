@@ -5,7 +5,8 @@ CREATE TYPE "Status" AS ENUM ('TODO', 'IN_PROGRESS', 'DONE', 'DELETED');
 CREATE TABLE "User" (
     "id" SERIAL NOT NULL,
     "email" TEXT NOT NULL,
-    "username" TEXT,
+    "username" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
