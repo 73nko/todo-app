@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "prisma:init": "cd packages/utils && npx prisma migrate dev --name init",
+    "prisma:init": "docker:start && cd packages/utils && npx prisma migrate dev --name init",
     "start": "npm run docker:start & npm run server:serve & npm run frontend:serve",
     "docker:start": "docker-compose -f ./packages/utils/docker-compose.dev.yml up",
     "server:serve": "npx nx run server:serve",
