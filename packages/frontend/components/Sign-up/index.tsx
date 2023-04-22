@@ -1,14 +1,7 @@
-import { useMutation } from '@apollo/client';
 import styled from '@emotion/styled';
 import Link from 'next/link';
-import { USER_CREATE_ACCOUNT } from '../../graphql/User';
-import { useEffect } from 'react';
 
-type FormValues = {
-  name: { value: string };
-  email: { value: string };
-  password: { value: string };
-};
+import { useSignUp } from './useSignUp';
 
 const Form = styled.form`
   display: flex;
@@ -19,30 +12,7 @@ const Form = styled.form`
 `;
 
 const SignUp = () => {
-  const [signUp, { data }] = useMutation(USER_CREATE_ACCOUNT.gql);
-
-  useEffect(() => {
-    if (data?.createAccount?.jwt) {
-      localStorage.setItem('todo-app-token', data.createAccount.jwt);
-    }
-  }, [data]);
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const { name, email, password } = event.target as typeof event.target &
-      FormValues;
-
-    signUp({
-      variables: {
-        createAccountInput: {
-          username: name.value,
-          email: email.value,
-          password: password.value,
-        },
-      },
-    });
-  };
-
+  const { handleSubmit } = useSignUp();
   return (
     <>
       <Form onSubmit={handleSubmit}>

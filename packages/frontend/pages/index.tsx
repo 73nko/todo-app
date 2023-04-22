@@ -1,4 +1,8 @@
-import { Logo, TodoWebContainer, TodoWebHeader } from '../components/shared';
+import {
+  Logo,
+  TodoWebContainer,
+  TodoWebHeader,
+} from '../components/components-shared';
 import Login from '../components/Login';
 
 import { USER_GET } from '../graphql/User';

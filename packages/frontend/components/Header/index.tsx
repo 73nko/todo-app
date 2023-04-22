@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
 import { Logout } from './Logout';
+import useSessionContext from '../../context/SessionContext';
 
 const HeaderContainer = styled.header`
   display: flex;
@@ -18,10 +19,8 @@ const HeaderContainer = styled.header`
 `;
 
 const Header = () => {
-  // TODO: Create session Context
-  const authState = true;
-
-  return <HeaderContainer>{authState ? <Logout /> : false}</HeaderContainer>;
+  const { isLogged } = useSessionContext();
+  return <HeaderContainer>{isLogged ? <Logout /> : false}</HeaderContainer>;
 };
 
 export default Header;

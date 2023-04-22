@@ -21,6 +21,8 @@ export const getUser = (
   context: Context
 ): UserResponse => {
   if (context.currentUser === null) throw new Error('Unauthenticated!');
+
+  console.log({ currentUser: context.currentUser });
   return context.prisma.user.findUniqueOrThrow({
     where: {
       id: context.currentUser.id,

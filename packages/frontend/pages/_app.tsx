@@ -2,9 +2,11 @@ import Head from 'next/head';
 import { AppProps } from 'next/app';
 import { ApolloProvider } from '@apollo/client';
 
-import { PageWrapper } from '../components/shared';
-import Header from '../components/Header';
+import { SessionProvider } from '../context/SessionContext';
 import { useApollo } from '../graphql/apolloClient';
+
+import Header from '../components/Header';
+import { PageWrapper } from '../components/components-shared';
 
 import './styles.css';
 
@@ -20,12 +22,14 @@ function TodoApp({ Component, pageProps }: AppProps) {
     <>
       <PageHead />
       <ApolloProvider client={client}>
-        <PageWrapper>
-          <Header />
-          <div className="container">
-            <Component {...pageProps} />
-          </div>
-        </PageWrapper>
+        <SessionProvider>
+          <PageWrapper>
+            <Header />
+            <div className="container">
+              <Component {...pageProps} />
+            </div>
+          </PageWrapper>
+        </SessionProvider>
       </ApolloProvider>
     </>
   );

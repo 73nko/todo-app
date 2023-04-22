@@ -1,14 +1,7 @@
 import styled from '@emotion/styled';
 import Link from 'next/link';
-import { USER_LOGIN } from '../../graphql/User';
-import { useMutation } from '@apollo/client';
-import { TOKEN } from '../../graphql/apolloClient';
-import { useRouter } from 'next/router';
 
-type FormValues = {
-  email: { value: string };
-  password: { value: string };
-};
+import { useLogin } from './useLogin';
 
 const Form = styled.form`
   display: flex;
@@ -19,32 +12,11 @@ const Form = styled.form`
 `;
 
 const Login = () => {
-  const router = useRouter();
-  const [login] = useMutation(USER_LOGIN.gql);
+  const { handleSubmit, loading, error } = useLogin();
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const { email, password } = event.target as typeof event.target &
-      FormValues;
+  if (loading) return <p>Loading...</p>;
+  if (loading) return <p>{error.message}</p>;
 
-    const {
-      data: {
-        login: { jwt },
-      },
-    } = await login({
-      variables: {
-        loginInput: {
-          email: email.value,
-          password: password.value,
-        },
-      },
-    });
-
-    if (jwt) {
-      localStorage.setItem(TOKEN, jwt);
-      router.push('/todos');
-    }
-  };
   return (
     <Form onSubmit={handleSubmit}>
       <input type="email" name="email" placeholder="Email" />
