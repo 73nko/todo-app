@@ -28,7 +28,7 @@ const handleLoginErrors = (
 export const useLogin = () => {
   const { userLogin } = useSessionContext();
   const [loginError, setLoginError] = useState<string | null>(null);
-  const [login, { loading }] = useMutation(USER_LOGIN.gql, {
+  const [login] = useMutation(USER_LOGIN.gql, {
     onCompleted: (data) => {
       const {
         login: { jwt },
@@ -57,5 +57,5 @@ export const useLogin = () => {
       },
     });
   };
-  return { handleSubmit, loading, loginError };
+  return { handleSubmit, loginError };
 };

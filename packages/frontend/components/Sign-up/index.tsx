@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import Link from 'next/link';
 
+import { ErrorMessage } from '../components-shared/ErrorMessage';
 import { useSignUp } from './useSignUp';
 
 const Form = styled.form`
@@ -12,21 +13,26 @@ const Form = styled.form`
 `;
 
 const SignUp = () => {
-  const { handleSubmit } = useSignUp();
+  const { handleSubmit, signUpError } = useSignUp();
   return (
     <>
       <Form onSubmit={handleSubmit}>
-        <input type="text" name="name" placeholder="Name" />
-        <input type="email" name="email" placeholder="Email" />
+        <input type="text" name="name" placeholder="Name" required />
+        <input type="email" name="email" placeholder="Email" required />
 
-        <input type="password" name="password" placeholder="Password" />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          required
+        />
 
         <div>
           <p>
             Already have an account? <Link href="/">Sign in</Link>
           </p>
         </div>
-
+        {signUpError && <ErrorMessage>{signUpError}</ErrorMessage>}
         <input type="submit" value="Sign up" />
       </Form>
     </>

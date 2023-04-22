@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import Link from 'next/link';
 
 import { useLogin } from './useLogin';
+import { ErrorMessage } from '../components-shared/ErrorMessage';
 
 const Form = styled.form`
   display: flex;
@@ -11,27 +12,14 @@ const Form = styled.form`
   width: 100%;
 `;
 
-const ErrorMessage = styled.p`
-  text-align: center;
-  color: #d8000c;
-  font-size: 0.8rem;
-  margin: 0.5rem 0;
-  padding: 0.8rem 0.5rem;
-  width: 100%;
-  border: 1px solid;
-  border-radius: 0.2rem;
-`;
-
 const Login = () => {
-  const { handleSubmit, loading, loginError } = useLogin();
-
-  if (loading) return <p>Loading...</p>;
+  const { handleSubmit, loginError } = useLogin();
 
   return (
     <Form onSubmit={handleSubmit}>
-      <input type="email" name="email" placeholder="Email" />
+      <input type="email" name="email" placeholder="Email" required />
 
-      <input type="password" name="password" placeholder="Password" />
+      <input type="password" name="password" placeholder="Password" required />
 
       <div>
         <p>

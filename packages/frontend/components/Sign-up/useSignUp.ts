@@ -1,7 +1,9 @@
-import { useMutation } from '@apollo/client';
+import { ApolloError, useMutation } from '@apollo/client';
+import get from 'lodash/get';
 
 import { USER_CREATE_ACCOUNT } from '../../graphql/User';
 import useSessionContext from '../../context/SessionContext';
+import { useState } from 'react';
 
 type FormValues = {
   name: { value: string };
@@ -9,13 +11,32 @@ type FormValues = {
   password: { value: string };
 };
 
+const handleSignUpErrors = (
+  apolloError: ApolloError,
+  setSignUpError: (string) => void
+) => {
+  const error: string = get(
+    apolloError,
+    'graphQLErrors[0].extensions.originalError.message',
+    'Something went wrong trying to sign up'
+  );
+
+  if (error) {
+    setSignUpError(error);
+  }
+};
+
 export const useSignUp = () => {
   const { userLogin } = useSessionContext();
+  const [signUpError, setSignUpError] = useState<string | null>(null);
   const [signUp] = useMutation(USER_CREATE_ACCOUNT.gql, {
     onCompleted: (data) => {
       if (data?.createAccount?.jwt) {
         userLogin(data.createAccount.jwt, '/todos');
       }
+    },
+    onError: (error) => {
+      handleSignUpErrors(error, setSignUpError);
     },
   });
 
@@ -35,5 +56,5 @@ export const useSignUp = () => {
     });
   };
 
-  return { handleSubmit };
+  return { handleSubmit, signUpError };
 };
