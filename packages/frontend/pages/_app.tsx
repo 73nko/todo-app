@@ -22,7 +22,7 @@ function TodoApp({ Component, pageProps }: AppProps) {
     <>
       <PageHead />
       <ApolloProvider client={client}>
-        <SessionProvider>
+        <SessionProvider client={client}>
           <PageWrapper>
             <Header />
             <div className="container">

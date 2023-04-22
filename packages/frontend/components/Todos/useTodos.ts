@@ -15,7 +15,6 @@ export const useTodos = () => {
   const [filter, setFilter] = useState(Filter.ALL);
   const { data, loading } = useQuery(TASKS_GET_BY_USER.gql);
   const allTasks = get(data, 'tasksByUser.tasks', []);
-
   const tasks = useMemo(
     () =>
       filter === Filter.ALL

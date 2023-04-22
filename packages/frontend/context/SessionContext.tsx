@@ -1,5 +1,6 @@
 import React from 'react';
 import { ClientUser, useSession } from '../hooks/useSession';
+import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
 
 interface ISessionContext {
   isLogged: boolean;
@@ -26,12 +27,14 @@ const useSessionContext = (): ISessionContext => {
 
 interface SessionProviderProps {
   children: React.ReactNode;
+  client: ApolloClient<NormalizedCacheObject>;
 }
 
 export const SessionProvider: React.FC<SessionProviderProps> = ({
   children,
+  client,
 }): React.ReactElement => {
-  const context = useSession();
+  const context = useSession({ client });
 
   return (
     <SessionContext.Provider value={context}>

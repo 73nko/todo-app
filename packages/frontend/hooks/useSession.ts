@@ -1,5 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useLazyQuery } from '@apollo/client';
+import {
+  ApolloClient,
+  NormalizedCacheObject,
+  useLazyQuery,
+} from '@apollo/client';
 import { useRouter } from 'next/router';
 import { User } from '@prisma/client';
 
@@ -7,8 +11,11 @@ import { TOKEN } from '../graphql/apolloClient';
 import { USER_GET } from '../graphql/User';
 
 export type ClientUser = Pick<User, 'id' | 'email' | 'username'>;
+type UseSessionProps = {
+  client?: ApolloClient<NormalizedCacheObject>;
+};
 
-export const useSession = () => {
+export const useSession = ({ client }: UseSessionProps = {}) => {
   const router = useRouter();
   const [isLogged, setIsLogged] = useState(false);
   const [user, setUser] = useState<ClientUser | null>(null);
@@ -23,6 +30,7 @@ export const useSession = () => {
       if (router.pathname !== '/') router.push('/');
       if (user) setUser(null);
       if (isLogged) setIsLogged(false);
+      client?.resetStore();
     },
   });
 
@@ -30,8 +38,9 @@ export const useSession = () => {
     await localStorage.removeItem(TOKEN);
     setIsLogged(false);
     setUser(null);
+    client?.resetStore();
     router.push('/');
-  }, [router]);
+  }, [client, router]);
 
   const userLogin = useCallback(
     async (jwt: string, redirectTo = '/') => {
