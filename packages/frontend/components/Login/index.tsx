@@ -11,11 +11,21 @@ const Form = styled.form`
   width: 100%;
 `;
 
+const ErrorMessage = styled.p`
+  text-align: center;
+  color: #d8000c;
+  font-size: 0.8rem;
+  margin: 0.5rem 0;
+  padding: 0.8rem 0.5rem;
+  width: 100%;
+  border: 1px solid;
+  border-radius: 0.2rem;
+`;
+
 const Login = () => {
-  const { handleSubmit, loading, error } = useLogin();
+  const { handleSubmit, loading, loginError } = useLogin();
 
   if (loading) return <p>Loading...</p>;
-  if (loading) return <p>{error.message}</p>;
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -28,7 +38,7 @@ const Login = () => {
           Don not have an account? <Link href="/sign-up">Sign up</Link>
         </p>
       </div>
-
+      {loginError && <ErrorMessage>{loginError}</ErrorMessage>}
       <input type="submit" value="Login" />
     </Form>
   );

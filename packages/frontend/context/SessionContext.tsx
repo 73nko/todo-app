@@ -1,5 +1,5 @@
 import React from 'react';
-import { ClientUser } from './useSession';
+import { ClientUser, useSession } from './useSession';
 
 interface ISessionContext {
   isLogged: boolean;
@@ -31,7 +31,7 @@ interface SessionProviderProps {
 export const SessionProvider: React.FC<SessionProviderProps> = ({
   children,
 }): React.ReactElement => {
-  const context = useSessionContext();
+  const context = useSession();
 
   return (
     <SessionContext.Provider value={context}>
