@@ -46,7 +46,7 @@ export const useSession = () => {
   useEffect(() => {
     const tryToQueryUser = async () => {
       const token = await localStorage.getItem(TOKEN);
-      if (token) await userLogin(token, '/todos');
+      if (token && !isLogged) await userLogin(token, '/todos');
     };
 
     tryToQueryUser();
