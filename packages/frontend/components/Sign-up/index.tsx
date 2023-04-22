@@ -1,31 +1,32 @@
-import styled from '@emotion/styled';
 import Link from 'next/link';
 
-import { ErrorMessage } from '../components-shared/ErrorMessage';
+import { ErrorMessage, Label, InputButton, Form } from '../components-shared/';
 import { useSignUp } from './useSignUp';
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 1rem;
-  width: 100%;
-`;
 
 const SignUp = () => {
   const { handleSubmit, signUpError } = useSignUp();
   return (
     <>
       <Form onSubmit={handleSubmit}>
-        <input type="text" name="name" placeholder="Name" required />
-        <input type="email" name="email" placeholder="Email" required />
+        <Label>
+          <input type="text" name="name" placeholder="Name" required />
+        </Label>
 
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          required
-        />
+        <Label>
+          <input type="email" name="email" placeholder="Email" required />
+          <div className="error">Error: Please enter a valid email</div>
+        </Label>
+
+        <Label>
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            pattern=".{8,}"
+            required
+          />
+          <div className="error">Error:Passwords are 8 characters minimum</div>
+        </Label>
 
         <div>
           <p>
@@ -33,7 +34,7 @@ const SignUp = () => {
           </p>
         </div>
         {signUpError && <ErrorMessage>{signUpError}</ErrorMessage>}
-        <input type="submit" value="Sign up" />
+        <InputButton type="submit" value="Sign up" />
       </Form>
     </>
   );

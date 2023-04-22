@@ -16,7 +16,6 @@ export const useSession = () => {
   const [getUser] = useLazyQuery(USER_GET.gql, {
     onCompleted: (data) => {
       if (data.user && !user) {
-        console.log('data.user', data.user);
         setUser(data.user);
       }
     },

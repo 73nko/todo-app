@@ -6,7 +6,10 @@ export const PageWrapper = styled.main`
   --pale-grey: #f5f5f5;
   --main-color: #4a77e5;
   --main-text-color: #1f2a4b;
+
+  --main-color-hover: #3a5fb5;
   --secondary-text-color: #a1a4ad;
+  --error-color: #d8000c;
   --shadow-color: rgba(0, 0, 0, 0.1);
 
   margin: 0;
