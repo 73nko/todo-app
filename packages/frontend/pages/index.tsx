@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { useSession } from '../context/useSession';
+import { useSession } from '../hooks/useSession';
 
 import { PageLayout } from '../components/components-shared';
 import Login from '../components/Login';

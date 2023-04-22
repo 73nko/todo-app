@@ -1,5 +1,5 @@
 import React from 'react';
-import { ClientUser, useSession } from './useSession';
+import { ClientUser, useSession } from '../hooks/useSession';
 
 interface ISessionContext {
   isLogged: boolean;
