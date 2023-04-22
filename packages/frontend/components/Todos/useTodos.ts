@@ -28,11 +28,8 @@ export const useTodos = () => {
   );
 
   const [addTask] = useMutation(TASK_CREATE.gql, {
-    onCompleted: () => {
-      console.log('add task');
-    },
     onError: (error) => {
-      console.log('error', error);
+      console.error('error', error);
     },
     refetchQueries: [{ query: TASKS_GET_BY_USER.gql }],
   });

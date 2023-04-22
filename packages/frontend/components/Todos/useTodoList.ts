@@ -6,11 +6,8 @@ import { useCallback } from 'react';
 
 export const useTodoList = (tasks: Task[]) => {
   const [updateTask] = useMutation(TASK_UPDATE.gql, {
-    onCompleted: () => {
-      console.log('update task');
-    },
     onError: (error) => {
-      console.log('error', error);
+      console.error('error', error);
     },
     refetchQueries: [{ query: TASKS_GET_BY_USER.gql }],
   });

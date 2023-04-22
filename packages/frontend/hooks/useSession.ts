@@ -26,7 +26,7 @@ export const useSession = ({ client }: UseSessionProps = {}) => {
         setUser(data.user);
       }
     },
-    onError: (error) => {
+    onError: (_error) => {
       if (router.pathname !== '/') router.push('/');
       if (user) setUser(null);
       if (isLogged) setIsLogged(false);
