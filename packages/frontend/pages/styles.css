@@ -40,3 +40,10 @@ h6 {
 #__next {
   isolation: isolate;
 }
+
+@font-face {
+  font-family: 'MarkPro';
+  src: url('../public/MarkPro/Mark\ Pro.ttf');
+  font-weight: 400;
+  font-style: normal;
+}

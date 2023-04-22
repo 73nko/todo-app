@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import get from 'lodash/get';
 
@@ -16,13 +16,17 @@ export const useTodos = () => {
   const { data, loading } = useQuery(TASKS_GET_BY_USER.gql);
   const allTasks = get(data, 'tasksByUser.tasks', []);
 
-  const tasks =
-    filter === Filter.ALL
-      ? allTasks
-      : allTasks.filter((task) => {
-          if (filter === Filter.COMPLETED) return task.status === Status.DONE;
-          if (filter === Filter.INCOMPLETED) return task.status === Status.TODO;
-        });
+  const tasks = useMemo(
+    () =>
+      filter === Filter.ALL
+        ? allTasks
+        : allTasks.filter((task) => {
+            if (filter === Filter.COMPLETED) return task.status === Status.DONE;
+            if (filter === Filter.INCOMPLETED)
+              return task.status === Status.TODO;
+          }),
+    [allTasks, filter]
+  );
 
   const [addTask] = useMutation(TASK_CREATE.gql, {
     onCompleted: () => {

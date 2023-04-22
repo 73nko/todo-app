@@ -9,12 +9,12 @@ const SignUp = () => {
     <>
       <Form onSubmit={handleSubmit}>
         <Label>
-          <input type="text" name="name" placeholder="Name" required />
+          <input type="text" name="name" placeholder="Full Name" required />
         </Label>
 
         <Label>
           <input type="email" name="email" placeholder="Email" required />
-          <div className="error">Error: Please enter a valid email</div>
+          <div className="error">Please enter a valid email</div>
         </Label>
 
         <Label>
@@ -25,14 +25,13 @@ const SignUp = () => {
             pattern=".{8,}"
             required
           />
-          <div className="error">Error:Passwords are 8 characters minimum</div>
+          <div className="error">Passwords are 8 characters minimum</div>
         </Label>
 
-        <div>
-          <p>
-            Already have an account? <Link href="/">Sign in</Link>
-          </p>
-        </div>
+        <p>
+          Already have an account? <Link href="/">Sign in</Link>
+        </p>
+
         {signUpError && <ErrorMessage>{signUpError}</ErrorMessage>}
         <InputButton type="submit" value="Sign up" />
       </Form>

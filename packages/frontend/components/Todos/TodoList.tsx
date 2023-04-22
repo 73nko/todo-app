@@ -53,6 +53,10 @@ const TodoListContainer = styled.ul`
   flex-direction: column;
   gap: 0.2rem;
   width: 100%;
+  max-height: 400px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--main-color) var(--secondary-text-color);
 `;
 
 const TaskContainer = styled.li`
@@ -61,6 +65,10 @@ const TaskContainer = styled.li`
   gap: 0.5rem;
   padding: 0.5rem 0;
   justify-content: flex-start;
+  transition: ease 0.5s all;
+  :hover {
+    background: rgba(161, 164, 173, 0.3);
+  }
 
   input[type='checkbox'] {
     width: 1rem;

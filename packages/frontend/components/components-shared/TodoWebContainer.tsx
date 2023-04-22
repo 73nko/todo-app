@@ -7,4 +7,7 @@ export const TodoWebContainer = styled.section`
   background-color: #fff;
   height: fit-content;
   width: 40%;
+  min-width: 400px;
+  max-height: 80vh;
+  overflow: hidden;
 `;

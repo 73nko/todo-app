@@ -6,7 +6,7 @@ export const Label = styled.label`
   margin-bottom: 0.5rem;
   width: 100%;
   input:hover:not(:disabled):not(:focus) {
-    border-bottom: 1px solid var(--main-text-color) !important;
+    border-bottom: 1px solid var(--secondary-text-color) !important;
   }
 
   input[value=''] {

@@ -11,7 +11,7 @@ const FiltersContainer = styled.div`
   gap: 0.5rem;
   padding: 0.5rem 0;
   justify-content: flex-start;
-
+  font-size: 0.875rem; // 14px
   p {
     color: var(--secondary-text-color);
   }
@@ -24,7 +24,6 @@ const FilterButton = styled.button<FilterButtonProps>`
   cursor: pointer;
   color: ${(props) =>
     props.isActive ? 'var(--main-color)' : 'var(--main-text-color)'};
-  font-size: 1rem;
 `;
 
 export const Filters = ({ updateFilter, filter }) => {

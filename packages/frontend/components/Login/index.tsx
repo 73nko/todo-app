@@ -10,7 +10,7 @@ const Login = () => {
     <Form onSubmit={handleSubmit}>
       <Label>
         <input type="email" name="email" placeholder="Email" required />
-        <div className="error">Error: Please enter a valid email</div>
+        <div className="error">Please enter a valid email</div>
       </Label>
 
       <Label>
@@ -21,7 +21,7 @@ const Login = () => {
           pattern=".{8,}"
           required
         />
-        <div className="error">Error:Passwords are 8 characters minimum</div>
+        <div className="error">Passwords are 8 characters minimum</div>
       </Label>
       <div>
         <p>
