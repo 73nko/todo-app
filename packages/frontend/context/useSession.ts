@@ -13,11 +13,16 @@ export const useSession = () => {
   const [isLogged, setIsLogged] = useState(false);
   const [user, setUser] = useState<ClientUser | null>(null);
 
-  const [getUser] = useLazyQuery(USER_GET.gql, {
+  const [getUser, { loading }] = useLazyQuery(USER_GET.gql, {
     onCompleted: (data) => {
       if (data.user && !user) {
         setUser(data.user);
       }
+    },
+    onError: (error) => {
+      if (router.pathname !== '/') router.push('/');
+      if (user) setUser(null);
+      if (isLogged) setIsLogged(false);
     },
   });
 
@@ -41,12 +46,11 @@ export const useSession = () => {
   useEffect(() => {
     const tryToQueryUser = async () => {
       const token = await localStorage.getItem(TOKEN);
-      if (token) {
-        await userLogin(token, '/todos');
-      }
+      if (token) await userLogin(token, '/todos');
     };
-    tryToQueryUser();
-  }, [userLogin]);
 
-  return { isLogged, user, userLogin, logout };
+    tryToQueryUser();
+  }, [router, userLogin]);
+
+  return { isLogged, user, userLogin, logout, loading };
 };

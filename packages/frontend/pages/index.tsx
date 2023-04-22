@@ -1,3 +1,7 @@
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { useSession } from '../context/useSession';
+
 import {
   Logo,
   TodoWebContainer,
@@ -5,25 +9,20 @@ import {
 } from '../components/components-shared';
 import Login from '../components/Login';
 
-import { USER_GET } from '../graphql/User';
-import { useRouter } from 'next/router';
-import { useQuery } from '@apollo/client';
-
 const PAGE_TITLE = 'Welcome back!';
 const PAGE_SUBTITLE = 'Login to continue';
 
 export function Index({ user }: { user: any }) {
   const router = useRouter();
-  const { loading, data, error } = useQuery(USER_GET.gql);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  const { isLogged, loading } = useSession();
+  useEffect(() => {
+    if (isLogged) {
+      router.push('/todos');
+    }
+  }, [isLogged, router]);
 
-  if (data?.user) {
-    router.push('/todos');
-  }
-
+  if (isLogged || loading) return null;
   return (
     <TodoWebContainer>
       <Logo />
