@@ -50,7 +50,7 @@ export const useSession = () => {
     };
 
     tryToQueryUser();
-  }, [router, userLogin]);
+  }, [isLogged, router, userLogin]);
 
   return { isLogged, user, userLogin, logout, loading };
 };

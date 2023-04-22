@@ -15,15 +15,23 @@ export const useTodoList = (tasks: Task[]) => {
     refetchQueries: [{ query: TASKS_GET_BY_USER.gql }],
   });
 
+  const deleteTask = useCallback(
+    (id: number) => {
+      const status = Status.DELETED;
+      updateTask({ variables: { updateTaskInput: { id, status } } });
+    },
+    [updateTask]
+  );
+
   const handleUpdateTask = useCallback(
     (id: number) => {
       const task = tasks.find((task: Task) => task.id === id);
       const status = task.status === Status.DONE ? Status.TODO : Status.DONE;
-      console.log({ status, id });
+
       updateTask({ variables: { updateTaskInput: { id, status } } });
     },
     [tasks, updateTask]
   );
 
-  return { handleUpdateTask };
+  return { handleUpdateTask, deleteTask };
 };

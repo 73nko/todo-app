@@ -7,9 +7,10 @@ type TodoListProps = { tasks: Task[] };
 type TaskProps = {
   task: Task;
   updateTask: (id: number) => void;
+  deleteTask: (id: number) => void;
 };
 
-const Task = ({ task, updateTask }: TaskProps) => {
+const Task = ({ task, updateTask, deleteTask }: TaskProps) => {
   const isCompleted = task.status === Status.DONE;
 
   return (
@@ -20,7 +21,7 @@ const Task = ({ task, updateTask }: TaskProps) => {
         checked={isCompleted}
       />
       <span>{task.title}</span>
-      <button>
+      <button onClick={() => deleteTask(task.id)}>
         <Delete />
       </button>
     </TaskContainer>
@@ -28,14 +29,17 @@ const Task = ({ task, updateTask }: TaskProps) => {
 };
 
 export const TodoList = ({ tasks }: TodoListProps) => {
-  const { handleUpdateTask } = useTodoList(tasks);
+  const { handleUpdateTask, deleteTask } = useTodoList(tasks);
 
   return (
     <TodoListContainer>
       {tasks.map((task: Task) => (
-        <li key={task.id}>
-          <Task task={task} updateTask={handleUpdateTask} />
-        </li>
+        <Task
+          key={task.id}
+          task={task}
+          updateTask={handleUpdateTask}
+          deleteTask={deleteTask}
+        />
       ))}
     </TodoListContainer>
   );
@@ -51,7 +55,7 @@ const TodoListContainer = styled.ul`
   width: 100%;
 `;
 
-const TaskContainer = styled.div`
+const TaskContainer = styled.li`
   display: flex;
   align-items: center;
   gap: 0.5rem;
